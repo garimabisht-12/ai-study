@@ -4,11 +4,13 @@ import quiz
 import generativeResources
 from flask_cors import CORS
 
-api = Flask(__name__)
-CORS(api)
+app = Flask(__name__)
+CORS(app)
 
 
-@api.route("/api/roadmap", methods=["POST"])
+
+
+@app.route("/api/roadmap", methods=["POST"])
 def get_roadmap():
     req = request.get_json()
 
@@ -21,7 +23,7 @@ def get_roadmap():
     return response_body
 
 
-@api.route("/api/quiz", methods=["POST"])
+@app.route("/api/quiz", methods=["POST"])
 def get_quiz():
     req = request.get_json()
 
@@ -38,7 +40,7 @@ def get_quiz():
     return response_body
 
 
-@api.route("/api/translate", methods=["POST"])
+@app.route("/api/translate", methods=["POST"])
 def get_translations():
     req = request.get_json()
 
@@ -50,7 +52,7 @@ def get_translations():
     return translated_text
 
 
-@api.route("/api/generate-resource", methods=["POST"])
+@app.route("/api/generate-resource", methods=["POST"])
 def generative_resource():
     req = request.get_json()
     req_data = {
@@ -66,3 +68,10 @@ def generative_resource():
     print(f"generative resources for {req_data['course']}")
     resources = generativeResources.generate_resources(**req_data)
     return resources
+@app.route("/")
+def home():
+    return "Generative AI Learning Platform API is running!"
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
